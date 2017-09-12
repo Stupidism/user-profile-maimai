@@ -1,11 +1,9 @@
-@import '~antd/dist/antd.css';
-
 .App {
   text-align: center;
 }
 
 .App-logo {
-  height: 80px;
+  height: 60px;
 }
 
 .App-header {
