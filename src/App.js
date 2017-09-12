@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from './logo-maimai.png';
 import './App.css';
 
 class App extends Component {
@@ -8,10 +8,13 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>我的人脉有多强?</h2>
+        </div>
+        <div>
+
         </div>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          脉脉用户画像-DoraHacks-xxxx团队倾情奉献
         </p>
       </div>
     );
