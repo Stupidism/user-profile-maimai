@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Button } from 'antd';
+
 import logo from './logo-maimai.png';
 import './App.css';
 
@@ -11,7 +13,7 @@ class App extends Component {
           <h2>我的人脉有多强?</h2>
         </div>
         <div>
-
+          <Button type="primary">Button</Button>
         </div>
         <p className="App-intro">
           脉脉用户画像-DoraHacks-xxxx团队倾情奉献
