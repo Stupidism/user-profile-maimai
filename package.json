@@ -2,6 +2,7 @@
   "name": "user-profile-maimai",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://stupidism.github.io/user-profile-maimai",
   "dependencies": {
     "antd-mobile": "^1.6.7",
     "echarts": "^3.7.1",
@@ -15,11 +16,14 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "babel-plugin-import": "^1.4.0",
+    "gh-pages": "^1.0.0",
     "react-app-rewired": "^1.2.7"
   }
 }
