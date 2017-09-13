@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { NavBar, WhiteSpace } from 'antd-mobile';
+import { withStateHandlers } from 'recompose';
+import { NavBar, WhiteSpace, WingBlank } from 'antd-mobile';
 
 import logo from './logo-maimai.png';
 import './App.css';
 import RelationGraph from './RelationGraph';
+import Login from './components/Login';
 import WordCloud from './components/WordCloud';
 
 const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -93,7 +95,21 @@ nodes.forEach((node) => {
 });
 
 class App extends Component {
+  renderContent() {
+    return (
+      <WingBlank>
+        <WordCloud topics={topics} />
+        <RelationGraph nodes={nodes} edges={edges} categories={categories} />
+        <p className="App-intro">
+          脉脉用户画像-DoraHacks-xxxx团队倾情奉献
+        </p>
+      </WingBlank>
+    );
+  }
+
   render() {
+    const { onAuthenticated, authenticated } = this.props;
+
     return (
       <div className="App">
         <NavBar
@@ -104,14 +120,14 @@ class App extends Component {
           我的人脉有多强?
         </NavBar>
         <WhiteSpace />
-        <WordCloud topics={topics} />
-        <RelationGraph nodes={nodes} edges={edges} categories={categories} />
-        <p className="App-intro">
-          脉脉用户画像-DoraHacks-xxxx团队倾情奉献
-        </p>
+        {authenticated ? this.renderContent() : <Login onAuthenticated={onAuthenticated} />}
       </div>
     );
   }
 }
 
-export default App;
+export default withStateHandlers({
+  authenticated: false,
+}, {
+  onAuthenticated: () => () => ({ authenticated: true }),
+})(App);
