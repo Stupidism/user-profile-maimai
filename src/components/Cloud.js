@@ -106,7 +106,6 @@ export class Cloud extends Component {
             <g transform={`translate(${width / 2}, ${height / 2})`}>
               {this.state.cloudDimensions.map(item =>
                 <text
-                  {...console.log(`translate(${item.x}, ${item.y}) rotate(${item.rotate}deg);`)}
                   className={getClassNames(item)}
                   key={item.id}
                   onClick={() => onSelectTopic(item)}

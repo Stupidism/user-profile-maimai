@@ -40,7 +40,7 @@ const onLogin = ({ form: { validateFields }, startAuth, endAuth, setError, onAut
         onAuthenticated();
       }
       endAuth();
-    }, 2000);
+    }, 1000);
   });
 };
 
