@@ -69,6 +69,7 @@ export default class WordCloud extends Component {
           selectedTopic={this.state.selectedTopic}
           topics={topics}
           width={width}
+          maxWidth='100%'
         />
         <Sidebar
           topic={this.state.selectedTopic}
@@ -92,5 +93,4 @@ WordCloud.defaultProps = {
   height: 400,
   topics: [],
   width: 400,
-  maxWidth: '100%',
 };

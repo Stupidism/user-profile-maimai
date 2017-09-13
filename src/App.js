@@ -1,43 +1,41 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { NavBar } from 'antd-mobile';
+import { NavBar, WhiteSpace } from 'antd-mobile';
 
 import logo from './logo-maimai.png';
 import './App.css';
 import RelationGraph from './RelationGraph';
 import WordCloud from './components/WordCloud';
 
-const topics = [{
-  "id": "1751295897__Berlin",
-  "label": "Berlin",
-  "volume": 165,
-  "sentiment": {
-    "negative": 3,
-    "neutral": 133,
-    "positive": 29
-  },
-  "sentimentScore": 65,
-}, {
-  "id": "1751295897__DJ",
-  "label": "DJ",
-  "volume": 48,
-  "sentimentScore": 55,
-  "sentiment": {
-    "negative": 3,
-    "neutral": 33,
-    "positive": 29
-  },
-}, {
-  "id": "1751295897__Ostgut Ton",
-  "label": "Ostgut Ton",
-  "volume": 24,
-  "sentimentScore": 23,
-  "sentiment": {
-    "negative": 3,
-    "neutral": 133,
-    "positive": 29
-  },
-}];
+const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function makeName(len) {
+  let text = '';
+
+  for (let i = 0; i < len; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+
+  return text;
+}
+
+const topics = _.fill(Array(100), 0).map((v, index) => {
+  const positive = Math.round(Math.random() * 500);
+  const negative = Math.round(Math.random() * 300);
+  const neutral = Math.round(Math.random() * 200);
+  const volume = negative + neutral + positive;
+
+  return {
+    id: index,
+    label: makeName(Math.round(Math.random() * 10) + 3),
+    volume,
+    sentimentScore: (positive * 3 + neutral - negative) / volume * 100,
+    sentiment: {
+      negative,
+      neutral,
+      positive,
+    },
+  }
+});
 
 const ME = 0;
 const nodes = _.fill(Array(100), 0).map((v, index) => ({
@@ -105,6 +103,7 @@ class App extends Component {
         >
           我的人脉有多强?
         </NavBar>
+        <WhiteSpace />
         <WordCloud topics={topics} />
         <RelationGraph nodes={nodes} edges={edges} categories={categories} />
         <p className="App-intro">

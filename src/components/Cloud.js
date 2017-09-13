@@ -61,6 +61,7 @@ export class Cloud extends Component {
       selectedTopic,
       topics,
       width,
+      maxWidth,
     } = this.props;
 
     if (this.state.isProcessing) {
@@ -100,7 +101,7 @@ export class Cloud extends Component {
     return (
       <div className="wordcloud__container_cloud">
         <div className="wordcloud__cloud">
-          <svg width={width} height={height}>
+          <svg width={width} height={height} style={{ maxWidth }}>
             <g transform={`translate(${width / 2}, ${height / 2})`}>
               {this.state.cloudDimensions.map(item =>
                 <text
