@@ -95,7 +95,7 @@ class App extends Component {
           我的人脉有多强?
         </NavBar>
         <WhiteSpace />
-        {!authenticated ? this.renderContent() : <Login onAuthenticated={this.onAuthenticated} />}
+        {authenticated ? this.renderContent() : <Login onAuthenticated={this.onAuthenticated} />}
       </div>
     );
   }
