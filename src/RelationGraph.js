@@ -42,8 +42,11 @@ const getOption = ({ nodes, categories, edges, edgeFor, sizeFor }) => () => {
   return {
     title: {
       text: '人脉关系图',
+      left: 'center',
     },
     legend: [{
+      top: 'bottom',
+      left: 'right',
       // selectedMode: 'single',
       data: categories.map(function (a) {
         return a.name;
