@@ -5,6 +5,39 @@ import { NavBar } from 'antd-mobile';
 import logo from './logo-maimai.png';
 import './App.css';
 import RelationGraph from './RelationGraph';
+import WordCloud from './components/WordCloud';
+
+const topics = [{
+  "id": "1751295897__Berlin",
+  "label": "Berlin",
+  "volume": 165,
+  "sentiment": {
+    "negative": 3,
+    "neutral": 133,
+    "positive": 29
+  },
+  "sentimentScore": 65,
+}, {
+  "id": "1751295897__DJ",
+  "label": "DJ",
+  "volume": 48,
+  "sentimentScore": 55,
+  "sentiment": {
+    "negative": 3,
+    "neutral": 33,
+    "positive": 29
+  },
+}, {
+  "id": "1751295897__Ostgut Ton",
+  "label": "Ostgut Ton",
+  "volume": 24,
+  "sentimentScore": 23,
+  "sentiment": {
+    "negative": 3,
+    "neutral": 133,
+    "positive": 29
+  },
+}];
 
 const ME = 0;
 const nodes = _.fill(Array(100), 0).map((v, index) => ({
@@ -72,6 +105,7 @@ class App extends Component {
         >
           我的人脉有多强?
         </NavBar>
+        <WordCloud topics={topics} />
         <RelationGraph nodes={nodes} edges={edges} categories={categories} />
         <p className="App-intro">
           脉脉用户画像-DoraHacks-xxxx团队倾情奉献
