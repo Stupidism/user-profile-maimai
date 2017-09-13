@@ -20,7 +20,7 @@ html {
  * Take care of the with of the cloud. Currently not responsive
  */
 body {
-  min-width: 500px;
+  min-width: 300px;
 }
 
 /**
@@ -95,7 +95,7 @@ body {
 .wordcloud__sidebar {
   border: 1px solid #ddd;
   border-radius: 3px;
-  margin: 2rem 2rem;
+  margin: 0;
 }
 .wordcloud__sidebar_title {
   font-size: 1.13rem;

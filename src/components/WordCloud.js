@@ -61,7 +61,6 @@ export default class WordCloud extends Component {
 
     return (
       <section className="wordcloud">
-        <h1 className="wordcloud__title">WordCloud</h1>
         <Cloud
           fontName={fontName}
           fontSizes={fontSizes}
@@ -93,4 +92,5 @@ WordCloud.defaultProps = {
   height: 400,
   topics: [],
   width: 400,
+  maxWidth: '100%',
 };

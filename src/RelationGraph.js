@@ -12,10 +12,10 @@ const edgeMeanings = [unilateralFollow, mutualFollow];
 const nodeSizeMeanings = [followCount, fansCount];
 
 const RelationGraph = ({ getOption, setEdgeFor, setSizeFor, edgeFor, sizeFor }) => (
-  <div>
+  <div style={{ padding: 10 }}>
     <ReactEcharts
       option={getOption()}
-      style={{height: '700px', width: '100%'}}
+      style={{ height: '700px', width: '100%' }}
       notMerge={true}
       lazyUpdate={true}
       theme={"theme_name"}
@@ -38,13 +38,10 @@ const RelationGraph = ({ getOption, setEdgeFor, setSizeFor, edgeFor, sizeFor }) 
 const getOption = ({ nodes, categories, edges, edgeFor, sizeFor }) => () => {
   const wantMutual = edgeMeanings[edgeFor] === mutualFollow;
   const wantFollowCount = nodeSizeMeanings[sizeFor] === followCount;
-  console.log(sizeFor, nodeSizeMeanings[sizeFor]);
 
   return {
     title: {
       text: '人脉关系图',
-      top: 'bottom',
-      left: 'right'
     },
     legend: [{
       // selectedMode: 'single',
@@ -59,12 +56,13 @@ const getOption = ({ nodes, categories, edges, edgeFor, sizeFor }) => () => {
       animation: false,
       data: nodes.map(({ sourceCount, targetCount, ...node }) => ({
         ...node,
-        symbolSize: Math.min(10, wantFollowCount ? targetCount : sourceCount) * 10,
+        symbolSize: Math.round(Math.log(wantFollowCount ? targetCount : sourceCount)) * 10 + 10,
       })),
       edges: edges.filter(({ mutual }) =>  wantMutual? mutual : !mutual),
       categories,
       roam: true,
-      edgeSymbol: [wantMutual ? 'arrow' : 'circle', 'arrow'],
+      edgeSymbol: [wantMutual ? 'arrow' : 'none', 'arrow'],
+      edgeSymbolSize: 5,
       force: {
         repulsion: 200
       }
