@@ -41,7 +41,10 @@ export function enrichTopics(topics, fontSizes) {
   const topicsWithFontSize = _map(topics, (topic) => Object.assign(
     {},
     topic,
-    { fontSize: getFontSize(topic.volume, minMaxVolume.maxVolume, minMaxVolume.minVolume, fontSizes) }
+    {
+      fontSize: getFontSize(topic.volume, minMaxVolume.maxVolume, minMaxVolume.minVolume, fontSizes),
+      rotate: (Math.round(Math.random() * 4) - 2) * 30,
+    }
   ));
 
   return {

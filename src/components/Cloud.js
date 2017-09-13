@@ -40,11 +40,12 @@ export class Cloud extends Component {
       .size([width, height])
       .words(enrichTopics(topics, fontSizes).entities)
       .padding(10)
+      .rotate((d) => d.rotate)
       .font(fontName)
-      .text((d) => d.label)
       .fontSize((d) => d.fontSize)
+      .spiral('archimedean')
       .random(() => 0.5)
-      .rotate(() => 0)
+      .text((d) => d.label)
       .on('end', (cloudDimensions) => { this.setState({ cloudDimensions, isProcessing: false }); })
       .start();
   }
@@ -105,6 +106,7 @@ export class Cloud extends Component {
             <g transform={`translate(${width / 2}, ${height / 2})`}>
               {this.state.cloudDimensions.map(item =>
                 <text
+                  {...console.log(`translate(${item.x}, ${item.y}) rotate(${item.rotate}deg);`)}
                   className={getClassNames(item)}
                   key={item.id}
                   onClick={() => onSelectTopic(item)}
@@ -113,7 +115,7 @@ export class Cloud extends Component {
                     fontFamily: fontName,
                   }}
                   textAnchor="middle"
-                  transform={`translate(${item.x} , ${item.y} )`}
+                  transform={`translate(${item.x}, ${item.y})rotate(${item.rotate})`}
                 >{item.text}</text>
               )}
             </g>
@@ -137,6 +139,7 @@ Cloud.propTypes = {
 
 Cloud.defaultProps = {
   selectedTopic: null,
+  fontName: 'Impact',
 };
 
 export default Cloud;
