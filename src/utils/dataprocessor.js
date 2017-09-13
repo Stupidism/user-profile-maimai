@@ -43,7 +43,7 @@ export function enrichTopics(topics, fontSizes) {
     topic,
     {
       fontSize: getFontSize(topic.volume, minMaxVolume.maxVolume, minMaxVolume.minVolume, fontSizes),
-      rotate: (Math.round(Math.random() * 4) - 2) * 30,
+      rotate: topic.volume % 180 - 90,
     }
   ));
 

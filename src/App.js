@@ -18,7 +18,7 @@ function makeName(len) {
   return text;
 }
 
-const topics = _.fill(Array(100), 0).map((v, index) => {
+const topics = _.fill(Array(1000), 0).map((v, index) => {
   const positive = Math.round(Math.random() * 500);
   const negative = Math.round(Math.random() * 300);
   const neutral = Math.round(Math.random() * 200);

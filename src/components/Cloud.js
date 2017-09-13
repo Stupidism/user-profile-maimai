@@ -39,7 +39,7 @@ export class Cloud extends Component {
     d3Cloud()
       .size([width, height])
       .words(enrichTopics(topics, fontSizes).entities)
-      .padding(10)
+      .padding(5)
       .rotate((d) => d.rotate)
       .font(fontName)
       .fontSize((d) => d.fontSize)
