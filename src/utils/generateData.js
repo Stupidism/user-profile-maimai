@@ -77,7 +77,5 @@ export default function() {
     }
   });
 
-  console.log('groups', groups);
-
   return { nodes, edges, groups, topics };
 }

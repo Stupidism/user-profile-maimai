@@ -13,9 +13,12 @@ class App extends Component {
     authenticated: false,
     dataFetching: false,
     dataFetched: false,
-    topics: [],
-    nodes: [],
-    edges: [],
+    data: {
+      topics: [],
+      nodes: [],
+      edges: [],
+      groups: [],
+    }
   };
 
   constructor() {
@@ -40,8 +43,8 @@ class App extends Component {
     this.setState({ dataFetching: true });
     setTimeout(() => {
       if (Math.random() > 0.5) {
-        const { nodes, edges, topics, groups } = generateFakeData();
-        this.setState({ nodes, edges, topics, groups, dataFetched: true, dataFetching: false, error: '' });
+        const data = generateFakeData();
+        this.setState({ data, dataFetched: true, dataFetching: false, error: '' });
       } else {
         this.setState({ dataFetched: true, error: '百分之五十加载失败', dataFetching: false });
       }
@@ -49,7 +52,7 @@ class App extends Component {
   }
 
   renderContent() {
-    const { topics, nodes, edges, groups, dataFetching, error } = this.state;
+    const { data: { topics, nodes, edges, groups }, dataFetching, error } = this.state;
 
     if (dataFetching) {
       return <span>正在加载数据...</span>;

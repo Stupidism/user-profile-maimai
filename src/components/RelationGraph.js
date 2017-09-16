@@ -18,7 +18,7 @@ const RelationGraph = ({ getOption, setEdgeFor, setSizeFor, edgeFor, sizeFor }) 
 );
 
 const ME = 0;
-const getOption = ({ users = [], relationships, groups = [], edgeFor, sizeFor }) => () => {
+const getOption = ({ users, relationships, groups, edgeFor, sizeFor }) => () => {
   console.log('1', relationships);
 
   const edges = [];
