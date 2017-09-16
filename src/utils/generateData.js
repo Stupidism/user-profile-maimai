@@ -77,5 +77,9 @@ export default function() {
     }
   });
 
-  return { nodes, edges, groups, topics };
+  const level = ['A', 'B', 'C', 'D', 'E', 'F'][Math.floor(Math.random() * 6)];
+  const scores = ['人脉宽度', '人脉高度', '人脉深度', '教育', '工作', '影响力']
+    .map(name => ({ name, value: Math.floor(Math.random() * 5) }));
+
+  return { nodes, edges, groups, topics, level, scores };
 }

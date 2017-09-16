@@ -5,6 +5,7 @@ import logo from './logo-maimai.png';
 import './App.css';
 import generateFakeData from './utils/generateData';
 import RelationGraph from './components/RelationGraph';
+import ScoreRadar from './components/ScoreRadar';
 import Login from './components/Login';
 import WordCloud from './components/WordCloud';
 
@@ -18,6 +19,7 @@ class App extends Component {
       nodes: [],
       edges: [],
       groups: [],
+      scores: [],
     }
   };
 
@@ -52,7 +54,7 @@ class App extends Component {
   }
 
   renderContent() {
-    const { data: { topics, nodes, edges, groups }, dataFetching, error } = this.state;
+    const { data: { topics, nodes, edges, groups, level, scores }, dataFetching, error } = this.state;
 
     if (dataFetching) {
       return <span>正在加载数据...</span>;
@@ -72,6 +74,7 @@ class App extends Component {
       <WingBlank>
         <RelationGraph users={nodes} relationships={edges} groups={groups} />
         <WordCloud topics={topics} />
+        <ScoreRadar level={level} scores={scores} />
         <p className="App-intro">
           脉脉用户画像-DoraHacks-董先sēng倾情奉献
         </p>
