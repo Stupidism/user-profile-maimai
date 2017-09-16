@@ -5,7 +5,7 @@ import ReactEcharts from 'echarts-for-react';
 
 const categories = [{ name: '我' }, { name: '好友' }, { name: '分组' }];
 
-const RelationGraph = ({ getOption, setEdgeFor, setSizeFor, edgeFor, sizeFor }) => (
+const RelationGraph = ({ getOption }) => (
   <div style={{ padding: 10 }}>
     <ReactEcharts
       option={getOption()}
@@ -25,7 +25,7 @@ const getOption = ({ getBaseOption, getChildOption }) => () => ({
   ...console.log(getChildOption(10)),
 });
 
-const getBaseOption = ({ users, relationships, groups, edgeFor, sizeFor }) => () => {
+const getBaseOption = ({ users, relationships, groups }) => () => {
 
   const edges = [];
   relationships.forEach((relationship) => {
@@ -53,8 +53,7 @@ const getBaseOption = ({ users, relationships, groups, edgeFor, sizeFor }) => ()
 
   return {
     title: {
-      text: '人脉关系图',
-      left: 'center',
+      text: '人脉关系',
     },
     legend: [{
       top: 'bottom',
@@ -93,7 +92,7 @@ const getBaseOption = ({ users, relationships, groups, edgeFor, sizeFor }) => ()
   };
 };
 
-const getChildOption = ({ users, relationships, groups, edgeFor, sizeFor }) => (maxId) => {
+const getChildOption = ({ users, relationships, groups }) => (maxId) => {
 
   const edges = [];
   relationships.forEach((relationship) => {
@@ -123,7 +122,7 @@ const getChildOption = ({ users, relationships, groups, edgeFor, sizeFor }) => (
 
   return {
     title: {
-      subtext: '人脉关系图',
+      subtext: `人脉关系图-${maxId}`,
     },
     series: {
       data: users.slice(0, maxId).map(({ size, image, isMe, ...node }) => ({

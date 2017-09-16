@@ -59,16 +59,19 @@ export default class WordCloud extends Component {
     }
 
     return (
-      <Cloud
-        fontName={fontName}
-        fontSizes={fontSizes}
-        height={height}
-        onSelectTopic={this.onSelectTopic}
-        selectedTopic={this.state.selectedTopic}
-        topics={topics}
-        width={width}
-        maxWidth='100%'
-      />
+      <div>
+        <div className='wordcloud__title'>标签云</div>
+        <Cloud
+          fontName={fontName}
+          fontSizes={fontSizes}
+          height={height}
+          onSelectTopic={this.onSelectTopic}
+          selectedTopic={this.state.selectedTopic}
+          topics={topics}
+          width={width}
+          maxWidth='100%'
+        />
+      </div>
     );
   }
 }
