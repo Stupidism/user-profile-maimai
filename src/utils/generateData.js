@@ -12,7 +12,7 @@ function makeName(len) {
 }
 
 export default function() {
-  const topics = _.fill(Array(1000), 0).map((v, index) => {
+  const topics = _.fill(Array(50), 0).map((v, index) => {
     const positive = Math.round(Math.random() * 500);
     const negative = Math.round(Math.random() * 300);
     const neutral = Math.round(Math.random() * 200);
@@ -20,7 +20,7 @@ export default function() {
 
     return {
       id: index,
-      label: makeName(Math.round(Math.random() * 10) + 3),
+      label: `话题${index}`,
       volume,
       sentimentScore: (positive * 3 + neutral - negative) / volume * 100,
       sentiment: {
@@ -34,7 +34,6 @@ export default function() {
   const ME = 0;
   const nodes = _.fill(Array(100), 0).map((v, index) => ({
     id: index,
-    draggable: true,
     targetCount: 0,
     sourceCount: 0,
   }));

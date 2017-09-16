@@ -38,12 +38,12 @@ export function getFontSize(volume, maxVolume, minVolume, fontSizes) {
  */
 export function enrichTopics(topics, fontSizes) {
   const minMaxVolume = getMinMaxVolume(topics);
-  const topicsWithFontSize = _map(topics, (topic) => Object.assign(
+  const topicsWithFontSize = _map(topics, (topic, index) => Object.assign(
     {},
     topic,
     {
       fontSize: getFontSize(topic.volume, minMaxVolume.maxVolume, minMaxVolume.minVolume, fontSizes),
-      rotate: topic.volume % 180 - 90,
+      rotate: [0, 90, 0, -90][index % 4],
     }
   ));
 

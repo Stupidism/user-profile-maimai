@@ -43,6 +43,14 @@ export class Cloud extends Component {
       .rotate((d) => d.rotate)
       .font(fontName)
       .fontSize((d) => d.fontSize)
+      .spiral(([width, height]) => step => {
+        const angle = step % 8 * Math.PI / 4;
+        const radius = Math.abs(step) / 8 * 10;
+        const dx = radius * Math.sin(angle) * 5;
+        const dy = radius * Math.cos(angle) * 4;
+        console.log(step, angle, radius, dx, dy);
+        return [width / 2 + dx, height / 2 + dy];
+      })
       .spiral('archimedean')
       .random(() => 0.5)
       .text((d) => d.label)

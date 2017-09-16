@@ -11,7 +11,6 @@ import './WordCloud.css';
  * Import Elements
  */
 import Cloud from './Cloud';
-import Sidebar from './Sidebar';
 
 /**
  * Compose individual components
@@ -60,21 +59,16 @@ export default class WordCloud extends Component {
     }
 
     return (
-      <section className="wordcloud">
-        <Cloud
-          fontName={fontName}
-          fontSizes={fontSizes}
-          height={height}
-          onSelectTopic={this.onSelectTopic}
-          selectedTopic={this.state.selectedTopic}
-          topics={topics}
-          width={width}
-          maxWidth='100%'
-        />
-        <Sidebar
-          topic={this.state.selectedTopic}
-        />
-      </section>
+      <Cloud
+        fontName={fontName}
+        fontSizes={fontSizes}
+        height={height}
+        onSelectTopic={this.onSelectTopic}
+        selectedTopic={this.state.selectedTopic}
+        topics={topics}
+        width={width}
+        maxWidth='100%'
+      />
     );
   }
 }
@@ -90,7 +84,7 @@ WordCloud.propTypes = {
 WordCloud.defaultProps = {
   fontName: 'Sans-Serif',
   fontSizes: [13, 16, 20, 26, 35, 49],
-  height: 400,
+  height: 800,
   topics: [],
-  width: 400,
+  width: 1000,
 };
