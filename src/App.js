@@ -4,7 +4,7 @@ import { NavBar, WhiteSpace, WingBlank, Button } from 'antd-mobile';
 import logo from './logo-maimai.png';
 import './App.css';
 import generateFakeData from './utils/generateData';
-import RelationGraph from './RelationGraph';
+import RelationGraph from './components/RelationGraph';
 import Login from './components/Login';
 import WordCloud from './components/WordCloud';
 
