@@ -69,10 +69,10 @@ class App extends Component {
 
     return (
       <WingBlank>
-        <WordCloud topics={topics} />
         <RelationGraph nodes={nodes} edges={edges} categories={categories} />
+        <WordCloud topics={topics} />
         <p className="App-intro">
-          脉脉用户画像-DoraHacks-xxxx团队倾情奉献
+          脉脉用户画像-DoraHacks-董先sēng倾情奉献
         </p>
       </WingBlank>
     );
