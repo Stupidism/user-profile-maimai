@@ -8,8 +8,6 @@ import RelationGraph from './components/RelationGraph';
 import Login from './components/Login';
 import WordCloud from './components/WordCloud';
 
-const categories = [{ name: '我' }, { name: '关注对象' }];
-
 class App extends Component {
   state = {
     authenticated: false,
@@ -42,8 +40,8 @@ class App extends Component {
     this.setState({ dataFetching: true });
     setTimeout(() => {
       if (Math.random() > 0.5) {
-        const { nodes, edges, topics } = generateFakeData();
-        this.setState({ nodes, edges, topics, dataFetched: true, dataFetching: false, error: '' });
+        const { nodes, edges, topics, groups } = generateFakeData();
+        this.setState({ nodes, edges, topics, groups, dataFetched: true, dataFetching: false, error: '' });
       } else {
         this.setState({ dataFetched: true, error: '百分之五十加载失败', dataFetching: false });
       }
@@ -51,7 +49,7 @@ class App extends Component {
   }
 
   renderContent() {
-    const { topics, nodes, edges, dataFetching, error } = this.state;
+    const { topics, nodes, edges, groups, dataFetching, error } = this.state;
 
     if (dataFetching) {
       return <span>正在加载数据...</span>;
@@ -69,7 +67,7 @@ class App extends Component {
 
     return (
       <WingBlank>
-        <RelationGraph nodes={nodes} edges={edges} categories={categories} />
+        <RelationGraph users={nodes} relationships={edges} groups={groups} />
         <WordCloud topics={topics} />
         <p className="App-intro">
           脉脉用户画像-DoraHacks-董先sēng倾情奉献

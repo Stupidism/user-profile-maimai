@@ -23,7 +23,12 @@ export default function() {
   const ME = 0;
   const nodes = _.fill(Array(100), 0).map((v, index) => ({
     id: index,
-    count: 0,
+  }));
+
+  const groups = ['纯好友', '本科大学', '研究生大学', '老家', '第一家公司', '第二家公司'].map((name, index) => ({
+    id: 100 + index,
+    name,
+    image: 'https://unsplash.it/80/80',
   }));
 
   const edges = [];
@@ -32,28 +37,47 @@ export default function() {
     nodes.forEach((target) => {
       if (target.id <= source.id) return;
 
-      if (source.id === ME || Math.random() > 0.99) {
+      if (source.id === ME) {
+        const edge = {
+          source: source.id,
+          target: target.id,
+          groups: [],
+        };
+
+        let groupNum = 0;
+        while(Math.random() > (groupNum ? 0.99 : 0.3) && groupNum < groups.length - 1) {
+          groupNum += 1;
+        }
+
+        const restGroups = groups.slice(1);
+        while(edge.groups.length < groupNum) {
+          const idx = Math.floor(Math.random() * restGroups.length);
+          edge.groups.push(restGroups.splice(idx, 1)[0]);
+        }
+
+        edges.push(edge);
+      } else if (Math.random() > 0.98) {
         edges.push({
           source: source.id,
           target: target.id,
         });
-
-        source.count += 1;
-        target.count += 1;
       }
+
     });
   });
 
   nodes.forEach((node) => {
-    node.image = 'https://unsplash.it/100/100';
     if (node.id === ME) {
       node.name = '我';
-      node.category = '我';
+      node.isMe = true;
+      node.image = 'https://unsplash.it/100/100';
     } else {
       node.name = `关注${node.id}`;
-      node.category = '关注对象';
+      node.image = 'https://unsplash.it/50/50';
     }
   });
 
-  return { nodes, edges, topics };
+  console.log('groups', groups);
+
+  return { nodes, edges, groups, topics };
 }
