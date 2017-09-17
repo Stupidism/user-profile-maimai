@@ -71,7 +71,7 @@ const getBaseOption = ({ users, relationships, groups }) => () => {
       animation: true,
       animationDuration: 5000,
       animationEasingUpdate: 'quinticInOut',
-      label: { normal: { show: false, position: 'bottom' } },
+      label: { normal: { show: true, position: 'bottom' } },
       categories,
       roam: true,
       hoverAnimation: true,
