@@ -34,7 +34,6 @@ const getOption = ({ level, scores }) => () => {
       indicator: scores.map(({ name }) => ({ name, max: 5 })),
     },
     series: [{
-      name: '预算 vs 开销（Budget vs spending）',
       type: 'radar',
       // areaStyle: {normal: {}},
       data : [

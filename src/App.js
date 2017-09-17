@@ -43,14 +43,13 @@ class App extends Component {
 
   fetchData() {
     this.setState({ dataFetching: true });
-    fetch('/users', {
+    fetch('/data', {
       method: 'GET',
       headers: {
         'Accept': 'application/json'
       },
     }).then(res => {
       const fakeData = generateFakeData();
-      console.log('fakeData', fakeData);
       if (res.status >= 200 && res.status < 300) {
         res.json().then(data => {
           if(data.user.id === '104622829') {
