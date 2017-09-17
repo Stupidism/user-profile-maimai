@@ -23,7 +23,6 @@ const ME = 0;
 const getOption = ({ getBaseOption, getChildOption, users }) => () => ({
   baseOption: getBaseOption(),
   options: [10, 35, 70, 90, 100].map(num => num / 100 * users.length).map(getChildOption),
-  ...console.log(getChildOption(10)),
 });
 
 const getBaseOption = ({ users, relationships, groups }) => () => {
@@ -115,9 +114,6 @@ const getChildOption = ({ users, relationships, groups }) => (maxNum) => {
     const sharedGroups = relationship.groups.length ? relationship.groups : groups.slice(0, 1);
 
     sharedGroups.forEach(sharedGroup => {
-      if(maxNum < 20) {
-        console.log(groupsById, sharedGroup, groupsById[sharedGroup]);
-      }
       const groupName = (groupsById[sharedGroup] || {}).name;
       edges.push({
         source,

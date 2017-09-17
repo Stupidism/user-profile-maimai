@@ -48,7 +48,6 @@ export class Cloud extends Component {
         const radius = Math.abs(step) / 8 * 10;
         const dx = radius * Math.sin(angle) * 5;
         const dy = radius * Math.cos(angle) * 4;
-        console.log(step, angle, radius, dx, dy);
         return [width / 2 + dx, height / 2 + dy];
       })
       .spiral('archimedean')
