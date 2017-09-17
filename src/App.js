@@ -16,11 +16,11 @@ class App extends Component {
     dataFetched: false,
     data: {
       topics: [],
-      nodes: [],
-      edges: [],
+      friends: [],
+      relationships: [],
       groups: [],
       scores: [],
-    }
+    },
   };
 
   constructor() {
@@ -43,18 +43,39 @@ class App extends Component {
 
   fetchData() {
     this.setState({ dataFetching: true });
-    setTimeout(() => {
-      if (Math.random() > 0.5) {
-        const data = generateFakeData();
-        this.setState({ data, dataFetched: true, dataFetching: false, error: '' });
+    fetch('/users', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      },
+    }).then(res => {
+      const fakeData = generateFakeData();
+      console.log('fakeData', fakeData);
+      if (res.status >= 200 && res.status < 300) {
+        res.json().then(data => {
+          if(data.user.id === '104622829') {
+            delete data.user;
+            delete data.groups;
+            delete data.relationships;
+            delete data.friends;
+          } else {
+            data.friends.unshift({ ...data.user, isMe: true, name: '我' })
+          }
+
+          this.setState({ data: {
+            ...fakeData,
+            ...data,
+          }, dataFetched: true, dataFetching: false, error: '' });
+        });
       } else {
-        this.setState({ dataFetched: true, error: '百分之五十加载失败', dataFetching: false });
+        this.setState({ data: fakeData, dataFetched: true, dataFetching: false, error: '' });
+        // this.setState({ dataFetched: true, error: '获取数据失败', dataFetching: false });
       }
-    }, 1000);
+    });
   }
 
   renderContent() {
-    const { data: { topics, nodes, edges, groups, level, scores }, dataFetching, error } = this.state;
+    const { data: { topics, friends, relationships, groups, level, scores }, dataFetching, error } = this.state;
 
     if (dataFetching) {
       return <span>正在加载数据...</span>;
@@ -72,7 +93,7 @@ class App extends Component {
 
     return (
       <WingBlank>
-        <RelationGraph users={nodes} relationships={edges} groups={groups} />
+        <RelationGraph users={friends} relationships={relationships} groups={groups} />
         <WordCloud topics={topics} />
         <ScoreRadar level={level} scores={scores} />
         <p className="App-intro">
@@ -99,7 +120,7 @@ class App extends Component {
           我的人脉有多强?
         </NavBar>
         <WhiteSpace />
-        {!authenticated ? this.renderContent() : <Login onAuthenticated={this.onAuthenticated} />}
+        {authenticated ? this.renderContent() : <Login onAuthenticated={this.onAuthenticated} />}
       </div>
     );
   }

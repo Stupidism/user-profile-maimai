@@ -20,13 +20,13 @@ export default function() {
     }
   });
 
-  const ME = 0;
+  const ME = '0';
   const nodes = _.fill(Array(100), 0).map((v, index) => ({
-    id: index,
+    id: index.toString(),
   }));
 
-  const groups = ['纯好友', '本科大学', '研究生大学', '老家', '第一家公司', '第二家公司'].map((name, index) => ({
-    id: 100 + index,
+  const groups = ['纯好友', '河南科技大', '携程', '河南焦作', '聚尚', '宅米'].map((name, index) => ({
+    id: (100 + index).toString(),
     name,
     image: 'https://unsplash.it/80/80',
   }));
@@ -39,8 +39,8 @@ export default function() {
 
       if (source.id === ME) {
         const edge = {
-          source: source.id,
-          target: target.id,
+          from: source.id,
+          to: target.id,
           groups: [],
         };
 
@@ -52,14 +52,14 @@ export default function() {
         const restGroups = groups.slice(1);
         while(edge.groups.length < groupNum) {
           const idx = Math.floor(Math.random() * restGroups.length);
-          edge.groups.push(restGroups.splice(idx, 1)[0]);
+          edge.groups.push(restGroups.splice(idx, 1)[0].id);
         }
 
         edges.push(edge);
       } else if (Math.random() > 0.98) {
         edges.push({
-          source: source.id,
-          target: target.id,
+          from: source.id,
+          to: target.id,
         });
       }
 
@@ -70,10 +70,9 @@ export default function() {
     if (node.id === ME) {
       node.name = '我';
       node.isMe = true;
-      node.image = 'https://unsplash.it/100/100';
+      node.img = 'https://unsplash.it/100/100';
     } else {
       node.name = `关注${node.id}`;
-      node.image = 'https://unsplash.it/50/50';
     }
   });
 
@@ -81,5 +80,5 @@ export default function() {
   const scores = ['人脉宽度', '人脉高度', '人脉深度', '教育', '工作', '影响力']
     .map(name => ({ name, value: Math.floor(Math.random() * 5) }));
 
-  return { nodes, edges, groups, topics, level, scores };
+  return { friends: nodes, relationships: edges, groups, topics, level, scores };
 }

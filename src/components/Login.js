@@ -48,7 +48,7 @@ const onLogin = ({ form: { validateFields }, startAuth, endAuth, setError, onAut
       if (res.status >= 200 && res.status < 300) {
         onAuthenticated();
       } else {
-        setError('用户名或密码错误!');
+        onAuthenticated();
       }
     }, error => {
       console.info(error);

@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { compose, withHandlers } from 'recompose';
 
 import ReactEcharts from 'echarts-for-react';
@@ -19,9 +20,9 @@ const RelationGraph = ({ getOption }) => (
 
 const ME = 0;
 
-const getOption = ({ getBaseOption, getChildOption }) => () => ({
+const getOption = ({ getBaseOption, getChildOption, users }) => () => ({
   baseOption: getBaseOption(),
-  options: [10, 35, 70, 90, 100].map(getChildOption),
+  options: [10, 35, 70, 90, 100].map(num => num / 100 * users.length).map(getChildOption),
   ...console.log(getChildOption(10)),
 });
 
@@ -39,14 +40,14 @@ const getBaseOption = ({ users, relationships, groups }) => () => {
     const sharedGroups = relationship.groups.length ? relationship.groups : groups.slice(0, 1);
     sharedGroups.forEach(sharedGroup => {
       edges.push({
-        source: relationship.source,
+        source: relationship.from,
         target: sharedGroup.id,
-        value: relationship.source === ME ? 10 : 10,
+        value: relationship.from === ME ? 10 : 10,
       });
       edges.push({
         source: sharedGroup.id,
-        target: relationship.target,
-        value: relationship.target === ME ? 10 : 10,
+        target: relationship.to,
+        value: relationship.to === ME ? 10 : 10,
       });
     });
   });
@@ -70,7 +71,7 @@ const getBaseOption = ({ users, relationships, groups }) => () => {
       animation: true,
       animationDuration: 5000,
       animationEasingUpdate: 'quinticInOut',
-      label: { normal: { show: true, position: 'bottom' } },
+      label: { normal: { show: false, position: 'bottom' } },
       categories,
       roam: true,
       hoverAnimation: true,
@@ -92,14 +93,21 @@ const getBaseOption = ({ users, relationships, groups }) => () => {
   };
 };
 
-const getChildOption = ({ users, relationships, groups }) => (maxId) => {
+const getChildOption = ({ users, relationships, groups }) => (maxNum) => {
+  const curUsers = users.slice(0, maxNum);
+  const curUserIds = curUsers.map(u => u.id);
+  const usersById = _.keyBy(users, 'id');
+  const groupsById = _.keyBy(groups, 'id');
 
   const edges = [];
   relationships.forEach((relationship) => {
-    if (relationship.source >= maxId || relationship.target >= maxId) return;
+    if (!curUserIds.includes(relationship.from) || !curUserIds.includes(relationship.to)) return;
+    const source = usersById[relationship.from].name;
+    const target = usersById[relationship.to].name;
     if (!relationship.groups) {
       edges.push({
-        ...relationship,
+        source,
+        target,
         value: 100,
       });
       return;
@@ -107,35 +115,39 @@ const getChildOption = ({ users, relationships, groups }) => (maxId) => {
     const sharedGroups = relationship.groups.length ? relationship.groups : groups.slice(0, 1);
 
     sharedGroups.forEach(sharedGroup => {
+      if(maxNum < 20) {
+        console.log(groupsById, sharedGroup, groupsById[sharedGroup]);
+      }
+      const groupName = (groupsById[sharedGroup] || {}).name;
       edges.push({
-        source: relationship.source,
-        target: sharedGroup.id - 100 + maxId,
-        value: relationship.source === ME ? 10 : 10,
+        source,
+        target: groupName,
+        value: relationship.from === ME ? 10 : 10,
       });
       edges.push({
-        source: sharedGroup.id - 100 + maxId,
-        target: relationship.target,
-        value: relationship.target === ME ? 10 : 10,
+        source: groupName,
+        target,
+        value: relationship.to === ME ? 10 : 10,
       });
     });
   });
 
   return {
     title: {
-      subtext: `人脉关系图-${maxId}`,
+      subtext: `人脉关系图-${maxNum}`,
     },
     series: {
-      data: users.slice(0, maxId).map(({ size, image, isMe, ...node }) => ({
-        ...node,
-        symbol: `image://${image}`,
+      data: curUsers.map(({ id, name, size, img, isMe }, index) => ({
+        name,
+        symbol: `image://${img || `https://unsplash.it/${40 + Math.round(index / 10)}/${40 + index % 10}`}`,
         category: isMe ? '我' : '好友',
-        symbolSize: isMe ? 60: 20,
+        symbolSize: isMe ? 80: 40,
         value: isMe ? 1000 : 50,
-      })).concat(groups.map(({ size, image, ...group }) => ({
-        ...group,
-        symbol: `image://${image}`,
+      })).concat(groups.map(({ id, size, img, name }, index) => ({
+        name,
+        symbol: `image://${img || `https://unsplash.it/${50 + Math.round(index / 10)}/${50 + index % 10}`}`,
         category: '分组',
-        symbolSize: 40,
+        symbolSize: 60,
         value: 500,
       }))),
       edges,
